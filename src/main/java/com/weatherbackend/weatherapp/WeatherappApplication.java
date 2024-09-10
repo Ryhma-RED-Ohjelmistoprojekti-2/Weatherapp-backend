@@ -26,28 +26,26 @@ public class WeatherappApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherappApplication.class, args);
 	}
-/*
-	@Bean
-	public CommandLineRunner demo() {
-		return (args) -> {
 
-			// Path to the folder containing your .txt files
-			String folderPath = environment.getProperty("FILE_PATH");
+	//NOTE! null folderPath causes program to crash!
+	// @Bean
+	// public CommandLineRunner demo() {
+	// 	return (args) -> {
+	// 		// Path to the folder containing your .txt files
+	// 		String folderPath = environment.getProperty("FILE_PATH");
 
-			// Get all .txt files in the folder
-			try (Stream<File> files = Files.list(Paths.get(folderPath)).map(Path::toFile)
-					.filter(file -> file.getName().endsWith(".txt"))) {
-				files.forEach(file -> {
-					// Extract the date from the file name
-					String fileName = file.getName();
-					String date = fileName.substring(fileName.indexOf('_') + 1, fileName.lastIndexOf('.'));
-					System.out.println("File Date: " + date);
-				});
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		};
-	}
-*/
+	// 		// Get all .txt files in the folder
+	// 		try (Stream<File> files = Files.list(Paths.get(folderPath)).map(Path::toFile)
+	// 				.filter(file -> file.getName().endsWith(".txt"))) {
+	// 			files.forEach(file -> {
+	// 				// Extract the date from the file name
+	// 				String fileName = file.getName();
+	// 				String date = fileName.substring(fileName.indexOf('_') + 1, fileName.lastIndexOf('.'));
+	// 				System.out.println("File Date: " + date);
+	// 			});
+	// 		} catch (IOException e) {
+	// 			e.printStackTrace();
+	// 		}
+	// 	};
+	// }
 }
