@@ -1,0 +1,60 @@
+
+
+
+
+Wind Direction: 270
+
+Average Wind Hour): 0.00mm
+
+Temperature: 21.11C
+
+Humidity: 55%
+
+Barometric Pressure: 1022.80hPa
+
+
+
+
+
+Wind Direction: 270
+
+Average Wind Hour): 0.00mm
+
+Temperature: 21.11C
+
+Humidity: 55%
+
+Barometric Pressure: 1022.80hPa
+
+
+
+
+
+Wind Direction: 270
+
+Average Wind Wind Direction: 315
+
+Average Wind Speed (One Minute): 0.00m/s
+
+Max Wind Speed (Five Minutes): 2.24m/s
+
+Rain Fall (One Hour): 0.00mm
+
+Rain Fall (24 Hour): 0.00mm
+
+Temperature: 21.11C
+
+Humidity: 55%
+
+Barometric Pressure: 1022.80hPa
+
+
+
+
+
+Wind Direction: 270
+
+Average Wind Speed (One Minute): 0.00m/s
+
+Max Wind Speed (Five Minutes): 2.24m/s
+
