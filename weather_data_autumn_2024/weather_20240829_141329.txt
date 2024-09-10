@@ -1,0 +1,60 @@
+orection: 225
+
+Average Wind Speed (One0mm
+
+Temperature: 20.56C
+
+Humidity: 56%
+
+Barometric Pressure: 1022.70hPa
+
+
+
+
+
+Wind Direction: 225
+
+Average Wind Speed (One0mm
+
+Temperature: 20.56C
+
+Humidity: 56%
+
+Barometric Pressure: 1022.70hPa
+
+
+
+
+
+Wind Direction: 225
+
+Average Wind Speed (OneWind Direction: 225
+
+Average Wind Speed (One Minute): 0.00m/s
+
+Max Wind Speed (Five Minutes): 0.89m/s
+
+Rain Fall (One Hour): 0.00mm
+
+Rain Fall (24 Hour): 0.00mm
+
+Temperature: 20.56C
+
+Humidity: 56%
+
+Barometric Pressure: 1022.70hPa
+
+
+
+
+
+Wind Direction: 225
+
+Average Wind Speed (One Minute): 0.00m/s
+
+Max Wind Speed (Five Minutes): 0.89m/s
+
+Rain Fall (One Hour): 0.00mm
+
+Rain Fall (24 Hour): 0.00mm
+
