@@ -26,10 +26,11 @@ public class WeatherappApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherappApplication.class, args);
 	}
-
+/*
 	@Bean
 	public CommandLineRunner demo() {
 		return (args) -> {
+
 			// Path to the folder containing your .txt files
 			String folderPath = environment.getProperty("FILE_PATH");
 
@@ -45,6 +46,8 @@ public class WeatherappApplication {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 		};
 	}
+*/
 }
