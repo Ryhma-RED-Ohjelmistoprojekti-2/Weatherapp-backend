@@ -1,4 +1,4 @@
-package com.weatherbackend.weatherapp.domain;
+package com.weatherbackend.weatherapp.domain.model;
 
 import jakarta.persistence.*;
 
@@ -30,17 +30,18 @@ public class Weather {
     @Column(name = "rainfall_twenty_four_hour")
     private Float rainfallTwentyFourHour;
 
-    public Weather() {}
+    public Weather() {
+    }
 
     public Weather(
-        Float temperature, 
-        Integer humidity, 
-        Float barometricPressure,
-        Integer windDirection,
-        Float avgWindSpeed,
-        Float maxWindSpeed,
-        Float rainfallOneHour,
-        Float rainfallTwentyFourHour) {
+            Float temperature,
+            Integer humidity,
+            Float barometricPressure,
+            Integer windDirection,
+            Float avgWindSpeed,
+            Float maxWindSpeed,
+            Float rainfallOneHour,
+            Float rainfallTwentyFourHour) {
 
         this();
         this.temperature = temperature;
@@ -128,8 +129,8 @@ public class Weather {
     @Override
     public String toString() {
         return String.format(
-            "Weather{temperature=%.2f°C, humidity=%d%%, barometricPressure=%.2f hPa, windDirection=%d°, avgWindSpeed=%.2f m/s, maxWindSpeed=%.2f m/s, rainfallOneHour=%.2f mm, rainfallTwentyFourHour=%.2f mm}",
-            temperature, humidity, barometricPressure, windDirection, avgWindSpeed, maxWindSpeed, rainfallOneHour, rainfallTwentyFourHour
-        );
+                "Weather{temperature=%.2f°C, humidity=%d%%, barometricPressure=%.2f hPa, windDirection=%d°, avgWindSpeed=%.2f m/s, maxWindSpeed=%.2f m/s, rainfallOneHour=%.2f mm, rainfallTwentyFourHour=%.2f mm}",
+                temperature, humidity, barometricPressure, windDirection, avgWindSpeed, maxWindSpeed, rainfallOneHour,
+                rainfallTwentyFourHour);
     }
 }

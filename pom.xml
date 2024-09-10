@@ -55,6 +55,28 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
+		
+		<!-- Dependency for MySQL database. 
+		
+		See Manual_for_MySQL_database_connection for more info. 
+
+		As 09 September 2024, latest version of mysql-connector-java
+		is 8.0.33 (built in April 18, 2023).
+
+		Check latest version of dependency from:
+		https://mvnrepository.com/artifact/mysql/mysql-connector-java
+
+		-->
+		
+		<dependency>
+    		<groupId>mysql</groupId>
+    		<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
+    		<scope>runtime</scope>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
