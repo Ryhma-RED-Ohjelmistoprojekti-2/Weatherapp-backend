@@ -59,7 +59,7 @@ public class WeatherappApplication {
 		List<Weather> data = new ArrayList<>();
 		try {
 			Weather we = new Weather();
-			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
+			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_140349.txt");
 			Scanner scanner = new Scanner(weatherData);
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
@@ -82,7 +82,7 @@ public class WeatherappApplication {
                 } else if (line.contains("Average Wind Speed (One Minute)")) {
                     we.setAvgWindSpeed(Float.parseFloat(numericValue));
                 } else if (line.contains("Rain Fall (24 Hour):")) {
-                    we.setRainfallTwentyFourHour(Float.parseFloat(numericValue));
+                    we.setRainfallTwentyFourHour(Float.parseFloat(numericValue.substring(2)));
                 }
 				if (isWeatherComplete(we)) {
 					weatherRepository.save(we);
