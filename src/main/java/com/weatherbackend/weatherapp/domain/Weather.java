@@ -1,5 +1,13 @@
 package com.weatherbackend.weatherapp.domain;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+
 import jakarta.persistence.*;
 
 @Entity(name = "weather")
