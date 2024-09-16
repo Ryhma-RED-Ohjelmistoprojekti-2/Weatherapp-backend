@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,11 +16,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 import com.weatherbackend.weatherapp.domain.Weather;
+import com.weatherbackend.weatherapp.domain.WeatherRepository;
 
 @SpringBootApplication
 public class WeatherappApplication {
 
 	private final Environment environment;
+
+	@Autowired
+	WeatherRepository weatherRepository;
 
 	public WeatherappApplication(Environment environment) {
 		this.environment = environment;
@@ -54,29 +59,33 @@ public class WeatherappApplication {
 		List<Weather> data = new ArrayList<>();
 		try {
 			Weather we = new Weather();
-			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_135409.txt");
+			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
 			Scanner scanner = new Scanner(weatherData);
 			while (scanner.hasNextLine()) {
-				String res = scanner.nextLine();
-				String numericValue = res.replaceAll("[^0-9.]", "").trim();
-                if (res.contains("Wind Direction")) {
+				String line = scanner.nextLine();
+				String numericValue = line.replaceAll("[^0-9.]", "").trim();
+				// String name = weatherData.getName();
+                // we.setPvm(name.substring(8, 16));
+                // we.setAika(name.substring(17, name.length() - 4));
+                if (line.contains("Wind Direction")) {
                     we.setWindDirection(Integer.parseInt(numericValue));
-                } else if (res.contains("Rain Fall (One Hour)")) {
+                } else if (line.contains("Rain Fall (One Hour)")) {
                     we.setRainfallOneHour(Float.parseFloat(numericValue));
-                } else if (res.contains("Max Wind Speed (Five Minutes):")) {
+                } else if (line.contains("Max Wind Speed (Five Minutes):")) {
                     we.setMaxWindSpeed(Float.parseFloat(numericValue));
-                } else if (res.contains("Temperature:")) {
+                } else if (line.contains("Temperature:")) {
                     we.setTemperature(Float.parseFloat(numericValue));
-                } else if (res.contains("Humidity:")) {
+                } else if (line.contains("Humidity:")) {
                     we.setHumidity(Integer.parseInt(numericValue));
-                } else if (res.contains("Barometric Pressure:")) {
+                } else if (line.contains("Barometric Pressure:")) {
                     we.setBarometricPressure(Float.parseFloat(numericValue));
-                } else if (res.contains("Average Wind Speed (One Minute)")) {
+                } else if (line.contains("Average Wind Speed (One Minute)")) {
                     we.setAvgWindSpeed(Float.parseFloat(numericValue));
-                } else if (res.contains("Rain Fall (24 Hour):")) {
+                } else if (line.contains("Rain Fall (24 Hour):")) {
                     we.setRainfallTwentyFourHour(Float.parseFloat(numericValue));
                 }
 				if (isWeatherComplete(we)) {
+					weatherRepository.save(we);
                     data.add(we);
                     break;
                 }
