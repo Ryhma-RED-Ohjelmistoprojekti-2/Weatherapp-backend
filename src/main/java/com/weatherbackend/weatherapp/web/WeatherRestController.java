@@ -20,14 +20,14 @@ public class WeatherRestController {
     WeatherRepository weatherRepository;
 
     // all weathers
-    @GetMapping("/weathers")
+    @GetMapping("/api/weathers")
     public Iterable<Weather> getWeathers() {
 
         return weatherRepository.findAll();
     }
 
     // weather by id
-    @GetMapping("/weathers/{id}")
+    @GetMapping("/api/weathers/{id}")
     public @ResponseBody Optional<Weather> getWeatherById(@PathVariable("id") Long id) {
 
         return weatherRepository.findById(id);
