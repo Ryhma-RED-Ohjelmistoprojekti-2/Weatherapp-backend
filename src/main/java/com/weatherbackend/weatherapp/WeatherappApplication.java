@@ -41,60 +41,59 @@ public class WeatherappApplication {
 			// // Path to the folder containing your .txt files
 			// String folderPath = environment.getProperty("FILE_PATH");
 
-			// // Get all .txt files in the folder
-			// try (Stream<File> files = Files.list(Paths.get(folderPath)).map(Path::toFile)
-			// .filter(file -> file.getName().endsWith(".txt"))) {
-			// files.forEach(file -> {
-			// // Extract the date from the file name
-			// String fileName = file.getName();
-			// String date = fileName.substring(fileName.indexOf('_') + 1,
-			// fileName.lastIndexOf('.'));
-			// System.out.println("File Date: " + date);
-			// });
-			// } catch (IOException e) {
-			// e.printStackTrace();
-			// }
-			// };
-			// }
-			List<Weather> data = new ArrayList<>();
-			try {
-				Weather we = new Weather();
-				File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_140349.txt");
-				Scanner scanner = new Scanner(weatherData);
-				while (scanner.hasNextLine()) {
-					String line = scanner.nextLine();
-					String numericValue = line.replaceAll("[^0-9.]", "").trim();
-					// String name = weatherData.getName();
-					// we.setPvm(name.substring(8, 16));
-					// we.setAika(name.substring(17, name.length() - 4));
-					if (line.contains("Wind Direction")) {
-						we.setWindDirection(Integer.parseInt(numericValue));
-					} else if (line.contains("Rain Fall (One Hour)")) {
-						we.setRainfallOneHour(Float.parseFloat(numericValue));
-					} else if (line.contains("Max Wind Speed (Five Minutes):")) {
-						we.setMaxWindSpeed(Float.parseFloat(numericValue));
-					} else if (line.contains("Temperature:")) {
-						we.setTemperature(Float.parseFloat(numericValue));
-					} else if (line.contains("Humidity:")) {
-						we.setHumidity(Integer.parseInt(numericValue));
-					} else if (line.contains("Barometric Pressure:")) {
-						we.setBarometricPressure(Float.parseFloat(numericValue));
-					} else if (line.contains("Average Wind Speed (One Minute)")) {
-						we.setAvgWindSpeed(Float.parseFloat(numericValue));
-					} else if (line.contains("Rain Fall (24 Hour):")) {
-						we.setRainfallTwentyFourHour(Float.parseFloat(numericValue.substring(2)));
-					}
-					if (isWeatherComplete(we)) {
-						weatherRepository.save(we);
-						data.add(we);
-						break;
-					}
-				}
-				System.out.println("\n\n" + data.toString() + "\n\n");
-			} catch (Exception error) {
-				System.out.println("\n\n " + error + " \n\n\n");
+		// // Get all .txt files in the folder
+		// try (Stream<File> files = Files.list(Paths.get(folderPath)).map(Path::toFile)
+		// .filter(file -> file.getName().endsWith(".txt"))) {
+		// files.forEach(file -> {
+		// // Extract the date from the file name
+		// String fileName = file.getName();
+		// String date = fileName.substring(fileName.indexOf('_') + 1,
+		// fileName.lastIndexOf('.'));
+		// System.out.println("File Date: " + date);
+		// });
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// };
+		// }
+		List<Weather> data = new ArrayList<>();
+		try {
+			Weather we = new Weather();
+			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
+			Scanner scanner = new Scanner(weatherData);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String numericValue = line.replaceAll("[^0-9.]", "").trim();
+				String name = weatherData.getName();
+                we.setDate(name.substring(8, 16));
+                we.setTime(name.substring(17, name.length() - 4));
+                if (line.contains("Wind Direction")) {
+                    we.setWindDirection(Integer.parseInt(numericValue));
+                } else if (line.contains("Rain Fall (One Hour)")) {
+                    we.setRainfallOneHour(Float.parseFloat(numericValue));
+                } else if (line.contains("Max Wind Speed (Five Minutes):")) {
+                    we.setMaxWindSpeed(Float.parseFloat(numericValue));
+                } else if (line.contains("Temperature:")) {
+                    we.setTemperature(Float.parseFloat(numericValue));
+                } else if (line.contains("Humidity:")) {
+                    we.setHumidity(Integer.parseInt(numericValue));
+                } else if (line.contains("Barometric Pressure:")) {
+                    we.setBarometricPressure(Float.parseFloat(numericValue));
+                } else if (line.contains("Average Wind Speed (One Minute)")) {
+                    we.setAvgWindSpeed(Float.parseFloat(numericValue));
+                } else if (line.contains("Rain Fall (24 Hour):")) {
+                    we.setRainfallTwentyFourHour(Float.parseFloat(numericValue.substring(2)));
+                }
+				if (isWeatherComplete(we)) {
+					weatherRepository.save(we);
+                    data.add(we);
+                    break;
+                }
 			}
-		};
+			System.out.println("\n\n"+data.toString() + "\n\n");
+		} catch (Exception error) {
+			System.out.println("\n\n " + error + " \n\n\n");
+		}};
 	}
 
 	private static boolean isWeatherComplete(Weather we) {

@@ -38,20 +38,24 @@ public class Weather {
     @Column(name = "rainfall_twenty_four_hour")
     private Float rainfallTwentyFourHour;
 
+    @Column(name = "date")
+    private String Date;
+
+    @Column(name = "time")
+    private String Time;
+
     public Weather() {
     }
+
+   
 
     public Weather(
             Float temperature,
             Integer humidity,
             Float barometricPressure,
             Integer windDirection,
-            Float avgWindSpeed,
-            Float maxWindSpeed,
-            Float rainfallOneHour,
-            Float rainfallTwentyFourHour) {
-
-        this();
+            Float avgWindSpeed, Float maxWindSpeed, Float rainfallOneHour, Float rainfallTwentyFourHour, String date,
+            String time) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.barometricPressure = barometricPressure;
@@ -60,6 +64,8 @@ public class Weather {
         this.maxWindSpeed = maxWindSpeed;
         this.rainfallOneHour = rainfallOneHour;
         this.rainfallTwentyFourHour = rainfallTwentyFourHour;
+        Date = date;
+        Time = time;
     }
 
     public Long getId() {
@@ -132,13 +138,34 @@ public class Weather {
 
     public void setRainfallTwentyFourHour(Float rainfallTwentyFourHour) {
         this.rainfallTwentyFourHour = rainfallTwentyFourHour;
+
     }
+
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+    }
+
+
 
     @Override
     public String toString() {
-        return String.format(
-                "Weather{temperature=%.2f°C, humidity=%d%%, barometricPressure=%.2f hPa, windDirection=%d°, avgWindSpeed=%.2f m/s, maxWindSpeed=%.2f m/s, rainfallOneHour=%.2f mm, rainfallTwentyFourHour=%.2f mm}",
-                temperature, humidity, barometricPressure, windDirection, avgWindSpeed, maxWindSpeed, rainfallOneHour,
-                rainfallTwentyFourHour);
+        return "Weather [temperature=" + temperature + ", humidity=" + humidity + ", barometricPressure="
+                + barometricPressure + ", windDirection=" + windDirection + ", avgWindSpeed=" + avgWindSpeed
+                + ", maxWindSpeed=" + maxWindSpeed + ", rainfallOneHour=" + rainfallOneHour
+                + ", rainfallTwentyFourHour=" + rainfallTwentyFourHour + ", Date=" + Date + ", Time=" + Time + "]";
     }
+
+    
 }
