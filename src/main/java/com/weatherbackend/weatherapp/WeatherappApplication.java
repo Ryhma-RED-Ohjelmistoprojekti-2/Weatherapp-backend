@@ -59,14 +59,14 @@ public class WeatherappApplication {
 		List<Weather> data = new ArrayList<>();
 		try {
 			Weather we = new Weather();
-			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_140349.txt");
+			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
 			Scanner scanner = new Scanner(weatherData);
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				String numericValue = line.replaceAll("[^0-9.]", "").trim();
-				// String name = weatherData.getName();
-                // we.setPvm(name.substring(8, 16));
-                // we.setAika(name.substring(17, name.length() - 4));
+				String name = weatherData.getName();
+                we.setDate(name.substring(8, 16));
+                we.setTime(name.substring(17, name.length() - 4));
                 if (line.contains("Wind Direction")) {
                     we.setWindDirection(Integer.parseInt(numericValue));
                 } else if (line.contains("Rain Fall (One Hour)")) {
