@@ -37,6 +37,15 @@ CREATE TABLE `weatherdb_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+-- INSERT INTO `weatherdb_data` 
+-- (`temperature`, `humidity`, `barometric_pressure`, `wind_direction`, `avg_wind_speed`, `max_wind_speed`, `rainfall_one_hour`, `rainfall_twenty_four_hour`, `time_stamp`) 
+-- VALUES 
+-- (15.5, 80, 1013.2, 270, 5.4, 10.2, 0.0, 12.3, '2024-09-12 10:00:00'),
+-- (18.7, 75, 1010.5, 90, 6.1, 11.4, 0.1, 10.0, '2024-09-12 11:00:00'),
+-- (20.3, 70, 1012.0, 180, 7.2, 12.5, 0.0, 9.5, '2024-09-12 12:00:00'),
+-- (22.1, 65, 1011.8, 360, 8.0, 13.0, 0.2, 8.8, '2024-09-12 13:00:00');
+
+
 --
 -- Dumping data for table `weatherdb_data`
 --
