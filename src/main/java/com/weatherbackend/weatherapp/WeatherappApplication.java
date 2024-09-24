@@ -38,33 +38,30 @@ public class WeatherappApplication {
 	@Bean
 	CommandLineRunner test() {
 		return (args) -> {
-		// // Path to the folder containing your .txt files
-		// String folderPath = environment.getProperty("FILE_PATH");
+		readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
+		readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
+		readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_140454.txt");
+		};
+	}
 
-		// // Get all .txt files in the folder
-		// try (Stream<File> files = Files.list(Paths.get(folderPath)).map(Path::toFile)
-		// .filter(file -> file.getName().endsWith(".txt"))) {
-		// files.forEach(file -> {
-		// // Extract the date from the file name
-		// String fileName = file.getName();
-		// String date = fileName.substring(fileName.indexOf('_') + 1,
-		// fileName.lastIndexOf('.'));
-		// System.out.println("File Date: " + date);
-		// });
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// };
-		// }
+
+
+	private static boolean isWeatherComplete(Weather we) {
+		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
+		we.getTemperature() != null && we.getHumidity() != null && we.getRainfallTwentyFourHour() != null && we.getBarometricPressure() != null && we.getWindDirection() != null && we.getAvgWindSpeed() != null;
+	}
+
+
+	private Weather readFiles(String path) {
 		List<Weather> data = new ArrayList<>();
 		try {
 			Weather we = new Weather();
-			File weatherData = new File("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
-			Scanner scanner = new Scanner(weatherData);
+			File weatherdata = new File(path);
+			Scanner scanner = new Scanner(weatherdata);
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				String numericValue = line.replaceAll("[^0-9.]", "").trim();
-				String name = weatherData.getName();
+				String name = weatherdata.getName();
                 we.setDate(name.substring(8, 16));
                 we.setTime(name.substring(17, name.length() - 4));
                 if (line.contains("Wind Direction")) {
@@ -90,13 +87,12 @@ public class WeatherappApplication {
                     break;
                 }
 			}
-			System.out.println("\n\n"+data.toString() + "\n\n");
+			System.out.println("\n\n"+we.toString() + "\n\n");
+			return we;
 		} catch (Exception error) {
 			System.out.println("\n\n " + error + " \n\n\n");
-		}};
-	}
-	private static boolean isWeatherComplete(Weather we) {
-		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
-		we.getTemperature() != null && we.getHumidity() != null && we.getRainfallTwentyFourHour() != null && we.getBarometricPressure() != null && we.getWindDirection() != null && we.getAvgWindSpeed() != null;
-	}
-};
+		}
+		return null;
+	};
+		
+}

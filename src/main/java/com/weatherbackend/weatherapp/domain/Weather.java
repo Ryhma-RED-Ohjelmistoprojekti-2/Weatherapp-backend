@@ -47,7 +47,6 @@ public class Weather {
     public Weather() {
     }
 
-   
 
     public Weather(
             Float temperature,
