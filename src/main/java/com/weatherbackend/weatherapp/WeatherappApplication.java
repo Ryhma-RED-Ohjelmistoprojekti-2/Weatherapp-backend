@@ -33,8 +33,6 @@ public class WeatherappApplication {
 		};
 	}
 
-
-
 	private static boolean isWeatherComplete(Weather we) {
 		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
 		we.getTemperature() != null && we.getHumidity() != null && we.getRainfallTwentyFourHour() != null && we.getBarometricPressure() != null && we.getWindDirection() != null && we.getAvgWindSpeed() != null;
