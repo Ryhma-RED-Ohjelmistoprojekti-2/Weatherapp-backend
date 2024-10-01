@@ -1,13 +1,5 @@
 package com.weatherbackend.weatherapp.domain;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-
 import jakarta.persistence.*;
 
 @Entity(name = "weather")
@@ -46,8 +38,6 @@ public class Weather {
 
     public Weather() {
     }
-
-   
 
     public Weather(
             Float temperature,
@@ -157,15 +147,12 @@ public class Weather {
         Time = time;
     }
 
-
-
     @Override
     public String toString() {
         return "Weather [temperature=" + temperature + ", humidity=" + humidity + ", barometricPressure="
-                + barometricPressure + ", windDirection=" + windDirection + ", avgWindSpeed=" + avgWindSpeed
-                + ", maxWindSpeed=" + maxWindSpeed + ", rainfallOneHour=" + rainfallOneHour
-                + ", rainfallTwentyFourHour=" + rainfallTwentyFourHour + ", Date=" + Date + ", Time=" + Time + "]";
+            + barometricPressure + ", windDirection=" + windDirection + ", avgWindSpeed=" + avgWindSpeed
+            + ", maxWindSpeed=" + maxWindSpeed + ", rainfallOneHour=" + rainfallOneHour
+            + ", rainfallTwentyFourHour=" + rainfallTwentyFourHour + ", Date=" + Date + ", Time=" + Time + "]"
+        ;
     }
-
-    
 }

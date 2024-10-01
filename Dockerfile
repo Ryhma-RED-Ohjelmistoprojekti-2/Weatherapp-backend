@@ -8,7 +8,7 @@ COPY ./src ./src
 RUN ./mvnw clean install -DskipTests 
 RUN find ./target -type f -name '*.jar' -exec cp {} /opt/app/app.jar \; -quit
 
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 COPY --from=builder /opt/app/*.jar /opt/app/
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/opt/app/app.jar" ]
