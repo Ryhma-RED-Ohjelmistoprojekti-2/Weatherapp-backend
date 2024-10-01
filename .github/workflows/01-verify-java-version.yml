@@ -1,4 +1,4 @@
-name: Verify JDK version
+
 
 #Lets allow any push to our current repository,
 #including this YAML -file itself,
@@ -13,46 +13,35 @@ name: Verify JDK version
 #when somebody opens a pull request against main -branch
 #and then pushes updates to their branch.
 
+name: Verify JDK version
 
 on: [push, pull_request]
 
 jobs:
-	build:
-		#The machine runner, that executes jobs in workflow.
-		#Here, we will use GitHub-hosted runner of Ubuntu Linux,
-		#due its eliminate overhead and makes workflow easier.
-		runs on: ubuntu-latest
+  build:
+    #The machine runner, that executes jobs in workflow.
+    #Here, we will use GitHub-hosted runner of Ubuntu Linux,
+    #due its eliminate overhead and makes workflow easier.
+    runs-on: ubuntu-latest
 		
-		steps:
-		
-		#Checkout action, which allows our workflow
-		#to access the contents of our current repository 
-		#(this is required action).
-		
-		#Name will be recorded in log and tracks down easier errors.
-
-		#Uses, i.e., the that step will use fourth version (@v4) 
-		#of 'checkout' action.
-		#Please use the current version of checkout according the source:
-
-		#https://github.com/marketplace/actions/checkout
+    steps:
 
 
-		- name: Checkout current repository, backend
-		uses: actions/checkout@v4
-		
-		# Setting up the current Java version for project,
-		# which must be JDK-17.
-		- name: Set up JDK 17
-			uses: actions/setup-java@v4
-			with:
-				java-version: '17'
+      - name: Checkout current repository, backend
+        uses: actions/checkout@v4
 
-		- name: Verify Java version
-		run: java -version
+      # Setting up the current Java version for project,
+      # which must be JDK-17.
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
 
-		- name: Build with Maven
-		run: mvn clean install
+      - name: Verify Java version
+        run: java -version
+
+      - name: Build with Maven
+        run: mvn clean install
 
 
 #Source:
@@ -93,3 +82,5 @@ jobs:
 #  uses: actions/setup-java@v4
 #  with:
 #    java-version: '17'
+
+
