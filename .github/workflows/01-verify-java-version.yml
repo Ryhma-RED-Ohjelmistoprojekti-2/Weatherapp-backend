@@ -1,0 +1,95 @@
+name: Verify JDK version
+
+#Lets allow any push to our current repository,
+#including this YAML -file itself,
+#with on: push -trigger. This will run an action,
+#when something is push.
+
+#We also need on: pull_request -trigger, since we
+#want to run an action when weatherapp makes
+#pull requests like POST or other changes.
+
+#These triggers prevent builds from happening twice
+#when somebody opens a pull request against main -branch
+#and then pushes updates to their branch.
+
+
+on: [push, pull_request]
+
+jobs:
+	build:
+		#The machine runner, that executes jobs in workflow.
+		#Here, we will use GitHub-hosted runner of Ubuntu Linux,
+		#due its eliminate overhead and makes workflow easier.
+		runs on: ubuntu-latest
+		
+		steps:
+		
+		#Checkout action, which allows our workflow
+		#to access the contents of our current repository 
+		#(this is required action).
+		
+		#Name will be recorded in log and tracks down easier errors.
+
+		#Uses, i.e., the that step will use fourth version (@v4) 
+		#of 'checkout' action.
+		#Please use the current version of checkout according the source:
+
+		#https://github.com/marketplace/actions/checkout
+
+
+		- name: Checkout current repository, backend
+		uses: actions/checkout@v4
+		
+		# Setting up the current Java version for project,
+		# which must be JDK-17.
+		- name: Set up JDK 17
+			uses: actions/setup-java@v4
+			with:
+				java-version: '17'
+
+		- name: Verify Java version
+		run: java -version
+
+		- name: Build with Maven
+		run: mvn clean install
+
+
+#Source:
+#https://resources.github.com/learn/pathways/automation/essentials/automated-application-deployment-with-github-actions-and-pages/
+
+#https://stackoverflow.com/questions/70767090/github-actions-on-push-and-on-pull-request-difference
+
+#https://frontside.com/blog/2020-05-26-github-actions-pull_request/
+
+
+
+
+#---
+
+#Co-pilot text prompts, in chronologically order:
+
+#a)I have simple full stack project that must be continously integrated in Github Actions. The backend of project is made on Java Spring Boot with Maven dependencies. Could you explain, how to make introductory test of the backend (Java Spring Boot with Maven dependencies) in Github Actions?
+
+#b)Ok. What if I don't wanna test Maven dependencies, just that project can, let say, extract and parse data as from incoming JSON data?
+
+#c)So you can't do Step 1 and 2 only in Github Actions and not locally? In other words, must step 1 and 2 be executed locally inside the Spring Boot project's code?
+
+#d)How did you check which JDK version the project is currently uses in Visual Studio Code?
+
+#e)My project is currently running in JDK version 'JavaSE-17'. Therefore, in Github Actions, in order to Set up JDK, shouldn't be in the following form, or:
+
+#- name: Set up JDK 17
+#uses: actions/setup-java@2
+#with:
+# java-version: '17'
+
+#f)How can I comment in Github Actions, like how we comment in Java Spring Boot with # -mark?
+
+#g)How to mark multiple lines as comments in YAML -file?
+
+#h)In Github marketplace, the current version of setup-java is v4.4.0. Therefore, shouldn't 'uses' also be updated, i.e.:
+#- name: Set up JDK 17
+#  uses: actions/setup-java@v4
+#  with:
+#    java-version: '17'
