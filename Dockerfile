@@ -5,6 +5,7 @@ COPY mvnw pom.xml ./
 RUN chmod +x ./mvnw
 RUN ./mvnw dependency:go-offline
 COPY ./src ./src
+COPY ./src/main/resources/weather_data_autumn_2024 /app/weather_data_autumn_2024
 RUN ./mvnw clean install -DskipTests 
 RUN find ./target -type f -name '*.jar' -exec cp {} /opt/app/app.jar \; -quit
 
