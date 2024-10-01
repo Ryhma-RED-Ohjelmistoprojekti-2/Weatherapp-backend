@@ -8,10 +8,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.springframework.beans.factory.annotation.Value;
 
 @Controller
 @ResponseBody
 public class ScrapeController {
+
+    @Value("${AIRPORT_CODE}")
+    String airport = null;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/api/airport")
@@ -23,22 +29,30 @@ public class ScrapeController {
         String driverPath = projectPath + "\\chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", driverPath);
 
-        String headingText;
-        String paragraphText;
+        String elementText;
+        String finalText = "";
 
         try {
-			driver.get("http://example.com");
+			driver.get("https://lentopaikat.fi/" + airport + "/?doing_wp_cron=1727771104.7144129276275634765625");
 
-			WebElement heading = driver.findElement(By.tagName("h1"));
-			WebElement paragraph = driver.findElement(By.tagName("p"));
+            String pathExpression = "//p[contains(strong, 'Koordinaatit:')]";
+            WebElement element = driver.findElement(By.xpath(pathExpression));
+            elementText = element.getText();
 
-			headingText = heading.getText();
-			paragraphText = paragraph.getText();
+            String regex = "(\\d{2}/\\d{2})";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(elementText);
+
+            while (matcher.find()) {
+                String dimension = matcher.group(1);
+                finalText+= dimension + " ";
+            }
+            
 		} finally {
 			driver.quit();
 		}
 
-        return headingText + "," + paragraphText;
+        return finalText;
     }
     
 }
