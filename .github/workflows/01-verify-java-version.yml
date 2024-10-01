@@ -36,6 +36,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
+          distribution: temurin
 
       - name: Verify Java version
         run: java -version
@@ -83,3 +84,6 @@ jobs:
 #  with:
 #    java-version: '17'
 
+#i) I had to go break, and it seems that refreshing the website erased previous text prompt answer. My previous question, how did you verify JDK version in Github Actions, when backend uses Java SE 17 and spring boot?
+
+#j) Ok. Now I want push the verify-java.yaml -file to Github, specifically backend repository. Could you explain exact steps for it, when backend repository is active in main branch?
