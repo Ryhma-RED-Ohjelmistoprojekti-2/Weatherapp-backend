@@ -18,12 +18,9 @@ import java.util.Map;
 @RequestMapping("/api")
 public class WeatherRestController {
 
-    private static final String API_KEY = "my_secret_key"; //TODO: Create real key and put it on .env!
-
     @Autowired
     WeatherRepository weatherRepository;
 
-    // all weathers
     @GetMapping("/weathers")
     @CrossOrigin(origins = "http://localhost:5173")
     public Iterable<Weather> getWeathers() {
@@ -31,22 +28,18 @@ public class WeatherRestController {
         return weatherRepository.findAll();
     }
 
-    // weather by id
     @GetMapping("/weathers/{id}")
     @CrossOrigin(origins = "http://localhost:5173")
     public @ResponseBody Optional<Weather> getWeatherById(@PathVariable("id") Long id) {
 
         return weatherRepository.findById(id);
-    } //TODO: Error control?
+    } //TODO: Error control/validation?
 
     @PostMapping("/weathers")
-    public ResponseEntity<?> receiveData(@RequestHeader(value = "API-Key", required = false) String apiKey, @Valid @RequestBody Weather weather) {
+    public ResponseEntity<?> receiveData(@Valid @RequestBody Weather weather) {
 
-        if (apiKey == null || !apiKey.equals(API_KEY)) {
-            return new ResponseEntity<>("Unauthorized %-P", HttpStatus.UNAUTHORIZED);
-        }
-
-        if (weather == null || weather.getDate() == null || weather.getTemperature() == null) {//TODO: Update validation?
+        //TODO: Complete the if statement or make better validation
+        if (weather == null || weather.getDate() == null || weather.getTemperature() == null) {
             return new ResponseEntity<>("Missing required weather data", HttpStatus.BAD_REQUEST);
         }
 
