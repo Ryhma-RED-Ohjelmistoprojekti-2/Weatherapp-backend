@@ -39,52 +39,6 @@ public class WeatherappApplication {
 				&& we.getBarometricPressure() != null && we.getWindDirection() != null && we.getAvgWindSpeed() != null;
 	}
 
-	// HUOM! Tässä aiheutuu resurssivuoto, koska Scanner scanneria ei koskaan
-	// suljeta!
-
-	// private Weather readFiles(String path) {
-	// List<Weather> data = new ArrayList<>();
-	// try {
-	// Weather we = new Weather();
-	// File weatherdata = new File(path);
-	// Scanner scanner = new Scanner(weatherdata);
-	// while (scanner.hasNextLine()) {
-	// String line = scanner.nextLine();
-	// String numericValue = line.replaceAll("[^0-9.]", "").trim();
-	// String name = weatherdata.getName();
-	// we.setDate(name.substring(8, 16));
-	// we.setTime(name.substring(17, name.length() - 4));
-	// if (line.contains("Wind Direction")) {
-	// we.setWindDirection(Integer.parseInt(numericValue));
-	// } else if (line.contains("Rain Fall (One Hour)")) {
-	// we.setRainfallOneHour(Float.parseFloat(numericValue));
-	// } else if (line.contains("Max Wind Speed (Five Minutes):")) {
-	// we.setMaxWindSpeed(Float.parseFloat(numericValue));
-	// } else if (line.contains("Temperature:")) {
-	// we.setTemperature(Float.parseFloat(numericValue));
-	// } else if (line.contains("Humidity:")) {
-	// we.setHumidity(Integer.parseInt(numericValue));
-	// } else if (line.contains("Barometric Pressure:")) {
-	// we.setBarometricPressure(Float.parseFloat(numericValue));
-	// } else if (line.contains("Average Wind Speed (One Minute)")) {
-	// we.setAvgWindSpeed(Float.parseFloat(numericValue));
-	// } else if (line.contains("Rain Fall (24 Hour):")) {
-	// we.setRainfallTwentyFourHour(Float.parseFloat(numericValue.substring(2)));
-	// }
-	// if (isWeatherComplete(we)) {
-	// weatherRepository.save(we);
-	// data.add(we);
-	// break;
-	// }
-	// }
-	// System.out.println("\n\n"+we.toString() + "\n\n");
-	// return we;
-	// } catch (Exception error) {
-	// System.out.println("\n\n " + error + " \n\n\n");
-	// }
-	// return null;
-	// };
-
 	private Weather readFiles(String path) {
 		List<Weather> data = new ArrayList<>();
 		try {
