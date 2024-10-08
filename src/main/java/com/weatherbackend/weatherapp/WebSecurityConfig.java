@@ -23,27 +23,6 @@ public class WebSecurityConfig {
     return http.build();
   }
 
-  /*
-   * According to Copilot:
-   * 
-   * WebMvcConfigurer (interface in Spring Framework) customises default configs
-   * of Spring MVC.
-   * 
-   * Options addCorsMappings, addMapping and allowedOrigins configures
-   * how the backend interacts with frontend and softala.haaga-helia.fi .
-   * 
-   * Particularly in therms of handling Cross-Origin Resource Sharing (CORS)
-   * [a security feature implemented by browsers to prevent web pages from
-   * requesting to another domain] and API endpoint mappings.
-   * 
-   * In other words, these are setting up the backend to allow
-   * the frontend (URL) and softala.haaga-helia.fi to make requests
-   * to the backend API endpoints. Very crucial when they are all
-   * hosted on different domains.
-   * 
-   * api/** means that configs will be applied to all API endpoints.
-   */
-
   @Bean
   public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
@@ -64,3 +43,24 @@ public class WebSecurityConfig {
     };
   }
 }
+
+/*
+ * According to Copilot:
+ * 
+ * WebMvcConfigurer (interface in Spring Framework) customises default configs
+ * of Spring MVC.
+ * 
+ * Options addCorsMappings, addMapping and allowedOrigins configures
+ * how the backend interacts with frontend and softala.haaga-helia.fi .
+ * 
+ * Particularly in therms of handling Cross-Origin Resource Sharing (CORS)
+ * [a security feature implemented by browsers to prevent web pages from
+ * requesting to another domain] and API endpoint mappings.
+ * 
+ * In other words, these are setting up the backend to allow
+ * the frontend (URL) and softala.haaga-helia.fi to make requests
+ * to the backend API endpoints. Very crucial when they are all
+ * hosted on different domains.
+ * 
+ * api/** means that configs will be applied to all API endpoints.
+ */
