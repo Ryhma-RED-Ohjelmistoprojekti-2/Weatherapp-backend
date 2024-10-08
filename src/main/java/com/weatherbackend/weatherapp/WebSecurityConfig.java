@@ -29,16 +29,15 @@ public class WebSecurityConfig {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-            .allowedOrigins(
-                "https://softala.haaga-helia.fi", // TODO: Fix the address if needed
-                "http://localhost:5173" // TODO: REMOVE FROM RELEASE!
+          .allowedOrigins(
+          "https://softala.haaga-helia.fi", // TODO: Fix the address if needed
+          "http://localhost:5173"
         )
-            .allowedHeaders("Content-Type")
-            .allowedMethods("GET", "POST") // TODO: Allow more methods?
-            .allowedHeaders("application/json")
-            .allowCredentials(false);
-        // .maxAge(3600); //TODO: Change this so that there is validation for weather
-        // data?
+          .allowedHeaders("Content-Type")
+          .allowedMethods("GET", "POST") // TODO: Allow more methods?
+          .allowedHeaders("application/json")
+          .allowCredentials(false);
+        // .maxAge(3600); //TODO: Change this so that there is validation for weather data?
       }
     };
   }
