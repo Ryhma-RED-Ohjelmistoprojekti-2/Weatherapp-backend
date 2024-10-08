@@ -42,6 +42,7 @@ public class WeatherappApplication {
 			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
 			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_140454.txt");
 			postTest();
+			
 		};
 	}
 
@@ -110,9 +111,10 @@ public class WeatherappApplication {
             String weatherJson = objectMapper.writeValueAsString(content);
 			HttpClient httpClient = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create("http://localhost:8080/weathers"))
-					.POST(BodyPublishers.ofString(weatherJson)) 
+					.uri(URI.create("http://localhost:8080/api/weathers"))
+					.POST(BodyPublishers.ofString(weatherJson))
 					.build();
+
 			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 			System.out.println("OKKKKK" + response.toString());
 			return ResponseEntity.ok(response.body());
