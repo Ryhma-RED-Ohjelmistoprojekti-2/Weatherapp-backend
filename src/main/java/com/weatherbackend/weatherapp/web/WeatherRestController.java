@@ -22,14 +22,12 @@ public class WeatherRestController {
     WeatherRepository weatherRepository;
 
     @GetMapping("/weathers")
-    @CrossOrigin(origins = "http://localhost:5173")
     public Iterable<Weather> getWeathers() {
 
         return weatherRepository.findAll();
     }
 
     @GetMapping("/weathers/{id}")
-    @CrossOrigin(origins = "http://localhost:5173")
     public @ResponseBody Optional<Weather> getWeatherById(@PathVariable("id") Long id) {
 
         return weatherRepository.findById(id);
