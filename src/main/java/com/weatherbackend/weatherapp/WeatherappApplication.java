@@ -1,16 +1,27 @@
 package com.weatherbackend.weatherapp;
 
 import java.io.File;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.WeakHashMap;
+
+import javax.swing.text.html.parser.Entity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weatherbackend.weatherapp.domain.Weather;
 import com.weatherbackend.weatherapp.domain.WeatherRepository;
 
@@ -27,9 +38,10 @@ public class WeatherappApplication {
 	@Bean
 	CommandLineRunner test() {
 		return (args) -> {
-			readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
-			readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
-			readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_140454.txt");
+			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
+			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
+			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_140454.txt");
+			postTest();
 		};
 	}
 
@@ -39,6 +51,7 @@ public class WeatherappApplication {
 				&& we.getBarometricPressure() != null && we.getWindDirection() != null && we.getAvgWindSpeed() != null;
 	}
 
+	
 	private Weather readFiles(String path) {
 		List<Weather> data = new ArrayList<>();
 		try {
@@ -86,6 +99,25 @@ public class WeatherappApplication {
 
 		} catch (Exception error) {
 			System.out.println("\n\n " + error + " \n\n\n");
+		}
+		return null;
+	}
+
+	private ResponseEntity<String> postTest() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+            Weather content = readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_140454.txt");
+            String weatherJson = objectMapper.writeValueAsString(content);
+			HttpClient httpClient = HttpClient.newHttpClient();
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8080/weathers"))
+					.POST(BodyPublishers.ofString(weatherJson)) 
+					.build();
+			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println("OKKKKK" + response.toString());
+			return ResponseEntity.ok(response.body());
+		} catch (Exception e) {
+			System.out.println("ERROR: " + e );
 		}
 		return null;
 	}
