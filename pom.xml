@@ -87,9 +87,13 @@
     		<version>3.1.0</version>
     		<scope>runtime</scope>
 		</dependency>
+		
+
+		
 	</dependencies>
 
 	<build>
+	<finalName>weatherapp-backend</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
