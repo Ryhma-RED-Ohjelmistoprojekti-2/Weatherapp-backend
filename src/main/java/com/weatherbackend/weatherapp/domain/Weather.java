@@ -30,11 +30,9 @@ public class Weather {
     @Column(name = "rainfall_twenty_four_hour")
     private Float rainfallTwentyFourHour;
 
-    @Column(name = "date")
-    private String Date;
+    private String date;
 
-    @Column(name = "time")
-    private String Time;
+    private String time;
 
     public Weather() {
     }
@@ -54,8 +52,8 @@ public class Weather {
         this.maxWindSpeed = maxWindSpeed;
         this.rainfallOneHour = rainfallOneHour;
         this.rainfallTwentyFourHour = rainfallTwentyFourHour;
-        Date = date;
-        Time = time;
+        this.date = date;
+        this.time = time;
     }
 
     public Long getId() {
@@ -132,19 +130,19 @@ public class Weather {
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public String getTime() {
-        return Time;
+        return time;
     }
 
     public void setTime(String time) {
-        Time = time;
+        this.time = time;
     }
 
     @Override
@@ -152,7 +150,7 @@ public class Weather {
         return "Weather [temperature=" + temperature + ", humidity=" + humidity + ", barometricPressure="
             + barometricPressure + ", windDirection=" + windDirection + ", avgWindSpeed=" + avgWindSpeed
             + ", maxWindSpeed=" + maxWindSpeed + ", rainfallOneHour=" + rainfallOneHour
-            + ", rainfallTwentyFourHour=" + rainfallTwentyFourHour + ", Date=" + Date + ", Time=" + Time + "]"
+            + ", rainfallTwentyFourHour=" + rainfallTwentyFourHour + ", date=" + date + ", time=" + time + "]"
         ;
     }
 }

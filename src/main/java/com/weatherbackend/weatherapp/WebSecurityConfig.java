@@ -27,17 +27,18 @@ public class WebSecurityConfig {
   public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
       @Override
-      public void addCorsMappings(CorsRegistry registry) {
+      public void addCorsMappings(CorsRegistry registry) { //TODO: Change this when project exits dev-state!
         registry.addMapping("/api/**")
           .allowedOrigins(
-          "https://softala.haaga-helia.fi", // TODO: Fix the address if needed
-          "http://localhost:5173"
+          "https://softala.haaga-helia.fi",
+          "http://localhost:5173",
+          "https://web.postman.co"
         )
           .allowedHeaders("Content-Type")
-          .allowedMethods("GET", "POST") // TODO: Allow more methods?
+          .allowedMethods("GET", "POST") 
           .allowedHeaders("application/json")
           .allowCredentials(false);
-        // .maxAge(3600); //TODO: Change this so that there is validation for weather data?
+        // .maxAge(3600); ??
       }
     };
   }

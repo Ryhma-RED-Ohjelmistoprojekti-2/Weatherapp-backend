@@ -1,5 +1,3 @@
-
-
 #Lets allow any push to our current repository,
 #including this YAML -file itself,
 #with on: push -trigger. This will run an action,
