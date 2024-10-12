@@ -1,0 +1,13 @@
+{
+    "id": 4,
+    "temperature": null,
+    "humidity": null,
+    "barometricPressure": null,
+    "windDirection": null,
+    "avgWindSpeed": null,
+    "maxWindSpeed": null,
+    "rainfallOneHour": null,
+    "rainfallTwentyFourHour": null,
+    "date": "20240814",
+    "time": "100815"
+}

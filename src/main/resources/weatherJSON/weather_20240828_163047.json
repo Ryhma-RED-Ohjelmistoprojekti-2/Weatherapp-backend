@@ -1,0 +1,13 @@
+{
+    "id": 1905,
+    "temperature": 20.56,
+    "humidity": 69,
+    "barometricPressure": 1022.5,
+    "windDirection": 180,
+    "avgWindSpeed": 0.0,
+    "maxWindSpeed": 0.89,
+    "rainfallOneHour": null,
+    "rainfallTwentyFourHour": null,
+    "date": "20240828",
+    "time": "163047"
+}
