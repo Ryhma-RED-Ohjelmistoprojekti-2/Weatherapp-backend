@@ -18,8 +18,8 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
-    http.authorizeHttpRequests(authorize -> authorize
-        .requestMatchers(antMatcher("/api/**")).permitAll());
+      http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authorize -> authorize
+              .requestMatchers(antMatcher("/api/**")).permitAll());
     return http.build();
   }
 
@@ -27,18 +27,18 @@ public class WebSecurityConfig {
   public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
       @Override
-      public void addCorsMappings(CorsRegistry registry) { //TODO: Change this when project exits dev-state!
+      public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-          .allowedOrigins(
-          "https://softala.haaga-helia.fi",
-          "http://localhost:5173",
-          "https://web.postman.co"
+            .allowedOrigins(
+                "https://softala.haaga-helia.fi", // TODO: Fix the address if needed
+                "http://localhost:5173" // TODO: REMOVE FROM RELEASE!
         )
-          .allowedHeaders("Content-Type")
-          .allowedMethods("GET", "POST") 
-          .allowedHeaders("application/json")
-          .allowCredentials(false);
-        // .maxAge(3600); ??
+            .allowedHeaders("Content-Type")
+            .allowedMethods("GET", "POST") // TODO: Allow more methods?
+            .allowedHeaders("application/json")
+            .allowCredentials(false);
+        // .maxAge(3600); //TODO: Change this so that there is validation for weather
+        // data?
       }
     };
   }

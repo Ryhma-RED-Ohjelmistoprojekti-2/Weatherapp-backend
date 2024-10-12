@@ -32,6 +32,7 @@ public class WeatherRestController {
         List<Weather> weatherList = latestWeathers.getContent();
 
         return new ResponseEntity<>(weatherList, HttpStatus.OK);
+        // return weatherRepository.findAll(); // 
     }
 
     @GetMapping("/weathers/{id}")
