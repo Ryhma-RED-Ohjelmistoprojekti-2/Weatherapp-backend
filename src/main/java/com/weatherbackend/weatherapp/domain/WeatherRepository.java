@@ -11,4 +11,5 @@ import org.springframework.data.domain.Pageable;
 public interface WeatherRepository extends CrudRepository<Weather, Long> {
 
     Page<Weather> findAllByOrderByDateDescTimeDesc(Pageable pageable);
+    Weather findFirstByOrderByDateAscTimeAsc();
 }

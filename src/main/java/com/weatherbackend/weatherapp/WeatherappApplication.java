@@ -1,38 +1,23 @@
 package com.weatherbackend.weatherapp;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.WeakHashMap;
 
-import javax.swing.text.html.parser.Entity;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weatherbackend.weatherapp.domain.Weather;
-import com.weatherbackend.weatherapp.domain.WeatherRepository;
 
 @SpringBootApplication
 public class WeatherappApplication {
-
-	@Autowired
-	WeatherRepository weatherRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherappApplication.class, args);
@@ -41,15 +26,9 @@ public class WeatherappApplication {
 	@Bean
 	CommandLineRunner test() {
 		return (args) -> {
-
-			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_135303.txt");
-			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_141538.txt");
-			// readFiles("src/main/resources/weather_data_autumn_2024/weather_20240829_140454.txt");
-			// readJson("src/main/resources/weatherJSON/weather_20240814_103138.json");
 			postTest();
 		};
 	}
-	
 
 	private ResponseEntity<String> postTest() {
 		try {
@@ -58,20 +37,25 @@ public class WeatherappApplication {
 			checkAndSetDefaults(content);
 			isWeatherComplete(content);
 			String weatherJson = objectMapper.writeValueAsString(content);
-			// weatherRepository.save(content);
+
 			HttpClient httpClient = HttpClient.newHttpClient();
+
 			System.out.println("Building HTTP request...");
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create("http://localhost:8080/api/weathers"))
 					.header("Content-Type", "application/json")
 					.POST(HttpRequest.BodyPublishers.ofString(weatherJson))
 					.build();
+
 			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
 			System.out.println("Received HTTP response: " + response.statusCode());
 			System.out.println("Response body: " + response.body());
+
 			ObjectMapper responseMapper = new ObjectMapper();
 			JsonNode responseBody = responseMapper.readTree(response.body());
 			System.out.println("Parsed Response: " + responseBody.toPrettyString());
+
 			if (response.statusCode() == 200) {
 				System.out.println("Response body: " + response.body());
 				return ResponseEntity.ok(response.body());
@@ -85,18 +69,18 @@ public class WeatherappApplication {
 		return null;
 	}
 
+
 	private Weather readJson(String path) {
 		Weather weatherData = new Weather();
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			weatherData = objectMapper.readValue(new File(path), Weather.class);
-			// System.out.println("Weather data from JSON: " + weatherData);
 		} catch (Exception e) {
 			System.err.println("Error: " + e);
 		}
 		return weatherData;
 	}
-	
+
 
 	public void checkAndSetDefaults(Weather weather) {
 		if (weather.getRainfallOneHour() == null) {
@@ -106,8 +90,8 @@ public class WeatherappApplication {
 			weather.setRainfallTwentyFourHour(0.0f);
 		}
 	}
-	
 
+	
 	private static boolean isWeatherComplete(Weather we) {
 		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
 				we.getTemperature() != null && we.getHumidity() != null &&

@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api")
 public class WeatherRestController {
@@ -32,7 +31,6 @@ public class WeatherRestController {
         List<Weather> weatherList = latestWeathers.getContent();
 
         return new ResponseEntity<>(weatherList, HttpStatus.OK);
-        // return weatherRepository.findAll(); // 
     }
 
     @GetMapping("/weathers/{id}")
@@ -48,6 +46,7 @@ public class WeatherRestController {
     @PostMapping("/weathers")
     public ResponseEntity<?> receiveData(@Valid @RequestBody Weather weather) {
 
+        //TODO: Update validation to work with @Valid bean?
         if (weather == null || 
             weather.getTemperature() == null || 
             weather.getHumidity() == null || 
@@ -61,6 +60,16 @@ public class WeatherRestController {
             weather.getRainfallTwentyFourHour() == null
         ) {
             return new ResponseEntity<>("Missing required weather data", HttpStatus.BAD_REQUEST);
+        }
+
+        // If records exceed x, this removes the oldest record.
+        long recordCount = weatherRepository.count();
+
+        if (recordCount >= 100) {
+            Weather oldestWeather = weatherRepository.findFirstByOrderByDateAscTimeAsc();
+            if (oldestWeather != null) {
+                weatherRepository.delete(oldestWeather);
+            }
         }
 
         Weather savedWeather = weatherRepository.save(weather);
