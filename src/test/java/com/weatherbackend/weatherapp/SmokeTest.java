@@ -25,6 +25,8 @@ public class SmokeTest {
     private String urlForDatabase;
     @Value("${AIRPORT_CODE}")
     private String airportCode;
+    @Value("${ALLOWED_ORIGINS}")
+    private String allowedOrigins;
 
     @Test
     void contextLoads() {
