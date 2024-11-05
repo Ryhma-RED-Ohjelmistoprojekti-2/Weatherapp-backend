@@ -39,16 +39,15 @@ public class WebSecurityConfig {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-
         registry.addMapping("/api/**")
           .allowedOrigins(
             allowedOrigin1,
             allowedOrigin2,
             allowedOrigin3,
             "http://localhost:5173"
-            )
+          )
           .allowedHeaders("Content-Type")
-          .allowedMethods("GET", "POST") 
+          .allowedMethods("GET", "POST", "DELETE") 
           .allowedHeaders("application/json")
           .allowCredentials(false)
         ;

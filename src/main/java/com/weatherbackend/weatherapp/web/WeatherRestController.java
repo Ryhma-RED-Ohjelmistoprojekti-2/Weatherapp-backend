@@ -43,6 +43,11 @@ public class WeatherRestController {
         }
     }
 
+    @GetMapping("/deleteweather")
+    public void deleteWeather() {
+        weatherRepository.deleteAll();
+    }
+
     @PostMapping("/weathers")
     public ResponseEntity<?> receiveData(@Valid @RequestBody Weather weather) {
 
