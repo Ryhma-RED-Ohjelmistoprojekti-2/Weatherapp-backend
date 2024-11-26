@@ -25,10 +25,10 @@ public class Weather {
     private Float maxWindSpeed;
 
     @Column(name = "rainfall_one_hour")
-    private Float rainfallOneHour;
+    private Float rainfallOneHour = 0.0f;
 
     @Column(name = "rainfall_twenty_four_hour")
-    private Float rainfallTwentyFourHour;
+    private Float rainfallTwentyFourHour = 0.0f;
 
     private String date;
 

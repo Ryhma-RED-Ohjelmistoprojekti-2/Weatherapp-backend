@@ -5,20 +5,26 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.3.6</version>
+		<relativePath/>
 	</parent>
 	<groupId>com.weatherbackend</groupId>
 	<artifactId>weatherapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>weatherapp</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Application for sending and storing weather data</description>
 	<url/>
 	<licenses>
 		<license/>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+        	<name>Erkki Tiili [Textiili]</name>
+			<roles>
+				<role>Architect</role>		
+				<role>Tester</role>		
+			</roles>
+    	</developer>
 	</developers>
 	<scm>
 		<connection/>
@@ -32,57 +38,30 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<dependency>
-    		<groupId>jakarta.validation</groupId>
-    		<artifactId>jakarta.validation-api</artifactId>
-		</dependency>
-
 		<dependency>
     		<groupId>mysql</groupId>
     		<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
     		<scope>runtime</scope>
 		</dependency>
-
-		<dependency>
-    		<groupId>org.mariadb.jdbc</groupId>
-    		<artifactId>mariadb-java-client</artifactId>
-    		<version>3.1.0</version>
-    		<scope>runtime</scope>
-		</dependency>
 	</dependencies>
-
 	<build>
 	<finalName>weatherapp-backend</finalName>
 		<plugins>
@@ -92,5 +71,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

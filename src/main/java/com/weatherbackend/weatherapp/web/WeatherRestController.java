@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import jakarta.validation.Valid;
-import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class WeatherRestController {
     WeatherRepository weatherRepository;
 
     @GetMapping("/weathers")
-    public ResponseEntity<List<Weather>> getWeathers(
+    public ResponseEntity<List<Weather>> getWeathers(//TODO: Return only (1) latest record?
         @RequestParam(defaultValue = "0") int page, // This is set to 0 so that the first group of records is returned 
         @RequestParam(defaultValue = "20") int size  // This defines how many records are returned
     ) {
@@ -41,43 +39,5 @@ public class WeatherRestController {
         } else {
             return new ResponseEntity<>("Weather record not found", HttpStatus.NOT_FOUND);
         }
-    }
-
-    @GetMapping("/deleteweather")
-    public void deleteWeather() {
-        weatherRepository.deleteAll();
-    }
-
-    @PostMapping("/weathers")
-    public ResponseEntity<?> receiveData(@Valid @RequestBody Weather weather) {
-
-        //TODO: Update validation to work with @Valid bean?
-        if (weather == null || 
-            weather.getTemperature() == null || 
-            weather.getHumidity() == null || 
-            weather.getDate() == null || 
-            weather.getTime() == null ||
-            weather.getBarometricPressure() == null || 
-            weather.getWindDirection() == null || 
-            weather.getAvgWindSpeed() == null || 
-            weather.getMaxWindSpeed() == null || 
-            weather.getRainfallOneHour() == null || 
-            weather.getRainfallTwentyFourHour() == null
-        ) {
-            return new ResponseEntity<>("Missing required weather data", HttpStatus.BAD_REQUEST);
-        }
-
-        // If records exceed x, this removes the oldest record.
-        long recordCount = weatherRepository.count();
-
-        if (recordCount >= 100) {
-            Weather oldestWeather = weatherRepository.findFirstByOrderByDateAscTimeAsc();
-            if (oldestWeather != null) {
-                weatherRepository.delete(oldestWeather);
-            }
-        }
-
-        Weather savedWeather = weatherRepository.save(weather);
-        return new ResponseEntity<>(Map.of("message", "Weather data saved successfully", "weather", savedWeather), HttpStatus.OK);
     }
 }

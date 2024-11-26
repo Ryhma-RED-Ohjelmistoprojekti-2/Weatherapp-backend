@@ -1,96 +1,96 @@
 package com.weatherbackend.weatherapp;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.io.File;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import jakarta.annotation.PostConstruct;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weatherbackend.weatherapp.domain.Weather;
+import com.weatherbackend.weatherapp.domain.WeatherRepository;
 
 @SpringBootApplication
 public class WeatherappApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WeatherappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WeatherappApplication.class, args);
+    }
+}
 
-	@Bean
-	CommandLineRunner test() {
-		return (args) -> {
-			postTest();
-		};
-	}
+@Service
+class WeatherUpdateService {
 
-	private ResponseEntity<String> postTest() {
-		try {
-			String filePath = FolderWatcher.getNewestFilePath("/home/jusju/"); // palauttaa uusimman tiedoston polun stringinä
-			if (filePath == null) {
-				System.out.println("No files found in the directory.");
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No files found in directory");
-			}
-			
-			Weather content = readJson(filePath); 
-			System.out.println("\n\n\n\n\n\n\n\n" + content + "\n\n" );
-			checkAndSetDefaults(content);
-			isWeatherComplete(content);
-			ObjectMapper objectMapper = new ObjectMapper();
-			String weatherJson = objectMapper.writeValueAsString(content);
+    @Autowired
+    private WeatherRepository weatherRepository;
 
-			HttpClient httpClient = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create("http://localhost:8080/api/weathers"))
-					.header("Content-Type", "application/json")
-					.POST(HttpRequest.BodyPublishers.ofString(weatherJson))
-					.build();
+    @PostConstruct
+    public void init() {
+        scheduleAutomaticUpdate();
+    }
 
-			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-			System.out.println("Received HTTP response: " + response.statusCode());
-			System.out.println("Response body: " + response.body());
-			if (response.statusCode() == 200) {
-				return ResponseEntity.ok(response.body());
-			} else {
-				return ResponseEntity.status(response.statusCode()).body(response.body());
-			}
-		} catch (Exception e) {
-			System.err.println("ERROR: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
-		}
-	}
+    private void scheduleAutomaticUpdate() {
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
-	private Weather readJson(String path) {
-		Weather weatherData = new Weather();
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			weatherData = objectMapper.readValue(new File(path), Weather.class);
-		} catch (Exception e) {
-			System.err.println("Error: " + e);
-		}
-		return weatherData;
-	}
+        executorService.scheduleAtFixedRate(() -> {
+            try {
+                System.out.println("Executing scheduled updateWeather...");
+                updateWeather();
+            } catch (Exception e) {
+                System.err.println("Error during scheduled updateWeather: " + e.getMessage());
+            }
+        }, 0, 1, TimeUnit.MINUTES);
+    }
 
-	public void checkAndSetDefaults(Weather weather) {
-		if (weather.getRainfallOneHour() == null) {
-			weather.setRainfallOneHour(0.00f);
-		}
-		if (weather.getRainfallTwentyFourHour() == null) {
-			weather.setRainfallTwentyFourHour(0.0f);
-		}
-	}
+    private void updateWeather() {
+        try {
+            String userDir = System.getProperty("user.dir");
+            String weatherTxtPath = WeatherTxtLocator.getWeatherTxtPath(userDir);
 
-	private static boolean isWeatherComplete(Weather we) {
-		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
-				we.getTemperature() != null && we.getHumidity() != null &&
-				we.getRainfallTwentyFourHour() != null
-				&& we.getBarometricPressure() != null && we.getWindDirection() != null &&
-				we.getAvgWindSpeed() != null;
-	}
+            Weather newWeather = getWeatherObject(weatherTxtPath);
+            System.out.println(newWeather);
+            if (isWeatherComplete(newWeather)) {
+                try {
+                    long recordCount = weatherRepository.count();
+                    if (recordCount >= 3) { //Maximum amount of weather records kept.
+                        Weather oldestWeather = weatherRepository.findFirstByOrderByDateAscTimeAsc();
+                        if (oldestWeather != null) {
+                            weatherRepository.delete(oldestWeather);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("No existing records.");
+                }
+                weatherRepository.save(newWeather);
+            } else {
+                System.err.println("newWeather was invalid!");
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR: " + e.getMessage());
+        }
+    }
+
+    private Weather getWeatherObject(String path) {
+        Weather weatherData = new Weather();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            weatherData = objectMapper.readValue(new File(path), Weather.class);
+        } catch (Exception e) {
+            System.err.println("Error: " + e);
+        }
+        return weatherData;
+    }
+
+    private boolean isWeatherComplete(Weather w) {
+        return w.getRainfallOneHour() != null && w.getMaxWindSpeed() != null &&
+                w.getTemperature() != null && w.getHumidity() != null &&
+                w.getRainfallTwentyFourHour() != null
+                && w.getBarometricPressure() != null && w.getWindDirection() != null &&
+                w.getAvgWindSpeed() != null && w.getDate() != null && w.getTime() != null;
+    }
 }
