@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class FolderWatcher {
 
+    
     public static Path getNewestFile(Path directory) throws IOException {
         Optional<Path> newestFile = Files.list(directory)
             .filter(Files::isRegularFile)
@@ -15,6 +16,7 @@ public class FolderWatcher {
         return newestFile.orElse(null);
     }
 
+    // parametrinä kansion polku => palauttaa uusimman tiedoston polun stringinä
     public static String getNewestFilePath(String directoryPath) {
         Path path = Paths.get(directoryPath);
         try {

@@ -1,7 +1,20 @@
 package com.weatherbackend.weatherapp;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.io.File;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.weatherbackend.weatherapp.domain.Weather;
 
 @SpringBootApplication
 public class WeatherappApplication {
@@ -10,79 +23,74 @@ public class WeatherappApplication {
 		SpringApplication.run(WeatherappApplication.class, args);
 	}
 
-// 	@Bean
-// 	CommandLineRunner test() {
-// 		return (args) -> {
-// 			postTest();
-// 		};
-// 	}
-// private ResponseEntity<String> postTest() {
-//     try {
-//         String filePath = FolderWatcher.getNewestFilePath("src/main/resources/weatherJSON/");
-//         if (filePath == null) {
-//             System.out.println("No files found in the directory.");
-//             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No files found in directory");
-//         }
-// 		System.out.println(filePath);
-//         Weather content = readJson(filePath);
-//         checkAndSetDefaults(content);
-//         isWeatherComplete(content);
+	@Bean
+	CommandLineRunner test() {
+		return (args) -> {
+			postTest();
+		};
+	}
 
-//         ObjectMapper objectMapper = new ObjectMapper();
-//         String weatherJson = objectMapper.writeValueAsString(content);
+	private ResponseEntity<String> postTest() {
+		try {
+			String filePath = FolderWatcher.getNewestFilePath("/home/jusju/"); // palauttaa uusimman tiedoston polun stringinä
+			if (filePath == null) {
+				System.out.println("No files found in the directory.");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No files found in directory");
+			}
+			
+			Weather content = readJson(filePath); 
+			System.out.println("\n\n\n\n\n\n\n\n" + content + "\n\n" );
+			checkAndSetDefaults(content);
+			isWeatherComplete(content);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String weatherJson = objectMapper.writeValueAsString(content);
 
-//         HttpClient httpClient = HttpClient.newHttpClient();
-//         HttpRequest request = HttpRequest.newBuilder()
-//                 .uri(URI.create("http://localhost:8080/api/weathers"))
-//                 .header("Content-Type", "application/json")
-//                 .POST(HttpRequest.BodyPublishers.ofString(weatherJson))
-//                 .build();
+			HttpClient httpClient = HttpClient.newHttpClient();
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8080/api/weathers"))
+					.header("Content-Type", "application/json")
+					.POST(HttpRequest.BodyPublishers.ofString(weatherJson))
+					.build();
 
-//         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println("Received HTTP response: " + response.statusCode());
+			System.out.println("Response body: " + response.body());
+			if (response.statusCode() == 200) {
+				return ResponseEntity.ok(response.body());
+			} else {
+				return ResponseEntity.status(response.statusCode()).body(response.body());
+			}
+		} catch (Exception e) {
+			System.err.println("ERROR: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+		}
+	}
 
-//         System.out.println("Received HTTP response: " + response.statusCode());
-//         System.out.println("Response body: " + response.body());
+	private Weather readJson(String path) {
+		Weather weatherData = new Weather();
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			weatherData = objectMapper.readValue(new File(path), Weather.class);
+		} catch (Exception e) {
+			System.err.println("Error: " + e);
+		}
+		return weatherData;
+	}
 
-//         if (response.statusCode() == 200) {
-//             return ResponseEntity.ok(response.body());
-//         } else {
-//             return ResponseEntity.status(response.statusCode()).body(response.body());
-//         }
-//     } catch (Exception e) {
-//         System.err.println("ERROR: " + e.getMessage());
-//         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
-//     }
-// }
+	public void checkAndSetDefaults(Weather weather) {
+		if (weather.getRainfallOneHour() == null) {
+			weather.setRainfallOneHour(0.00f);
+		}
+		if (weather.getRainfallTwentyFourHour() == null) {
+			weather.setRainfallTwentyFourHour(0.0f);
+		}
+	}
 
-
-
-// 	private Weather readJson(String path) {
-// 		Weather weatherData = new Weather();
-// 		ObjectMapper objectMapper = new ObjectMapper();
-// 		try {
-// 			weatherData = objectMapper.readValue(new File(path), Weather.class);
-// 		} catch (Exception e) {
-// 			System.err.println("Error: " + e);
-// 		}
-// 		return weatherData;
-// 	}
-
-
-// 	public void checkAndSetDefaults(Weather weather) {
-// 		if (weather.getRainfallOneHour() == null) {
-// 			weather.setRainfallOneHour(0.00f);
-// 		}
-// 		if (weather.getRainfallTwentyFourHour() == null) {
-// 			weather.setRainfallTwentyFourHour(0.0f);
-// 		}
-// 	}
-
-	
-// 	private static boolean isWeatherComplete(Weather we) {
-// 		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
-// 				we.getTemperature() != null && we.getHumidity() != null &&
-// 				we.getRainfallTwentyFourHour() != null
-// 				&& we.getBarometricPressure() != null && we.getWindDirection() != null &&
-// 				we.getAvgWindSpeed() != null;
-// 	}
+	private static boolean isWeatherComplete(Weather we) {
+		return we.getRainfallOneHour() != null && we.getMaxWindSpeed() != null &&
+				we.getTemperature() != null && we.getHumidity() != null &&
+				we.getRainfallTwentyFourHour() != null
+				&& we.getBarometricPressure() != null && we.getWindDirection() != null &&
+				we.getAvgWindSpeed() != null;
+	}
 }
