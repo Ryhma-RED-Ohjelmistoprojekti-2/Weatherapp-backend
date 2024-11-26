@@ -31,5 +31,5 @@ Rasmus Haapalainen
 ## 2. Link to manual of backend.
 
 The broad manual of the backend can be read via following link:
-
+https://github.com/Ryhma-RED-Ohjelmistoprojekti-2/Weatherapp-documents/blob/d51a03c526b987cb1740cf9b24a8509a2c512024/Manual-for-backend.md
 
