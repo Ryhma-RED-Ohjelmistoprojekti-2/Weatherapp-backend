@@ -11,20 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
-import org.springframework.beans.factory.annotation.Value;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
-  @Value("${ALLOWED_ORIGIN_1:}")
-  private String allowedOrigin1;
-
-  @Value("${ALLOWED_ORIGIN_2:}")
-  private String allowedOrigin2;
-
-  @Value("${ALLOWED_ORIGIN_3:}")
-  private String allowedOrigin3;
 
   @Bean
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -41,9 +30,6 @@ public class WebSecurityConfig {
       public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
           .allowedOrigins(
-            allowedOrigin1,
-            allowedOrigin2,
-            allowedOrigin3,
             "http://localhost:5173"
           )
           .allowedHeaders("Content-Type")
@@ -55,9 +41,3 @@ public class WebSecurityConfig {
     };
   }
 }
-
-/*
- * This determines who can interact 
- * with backend via network connection and 
- * which requests are allowed
- */
