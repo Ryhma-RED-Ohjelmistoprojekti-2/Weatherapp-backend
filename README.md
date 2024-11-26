@@ -1,22 +1,43 @@
-Members of the team:
+## 1. Members of the team:
 
 Erkki Tiili
+- E-mail:
+- Github account:
 
-Email:
-Github account: 
+Ilari Koikkalainen
+- E-mail:
+- Github account:
 
-Ilari Koikkalainen 
+Oskari Aho
+- E-mail:
+- Github account:
 
-Oskari Aho 
+Kaj Jansson
+- E-mail: kaj.jansson@myy.haaga-helia.fi
+- Github account: https://github.com/KajFromHH
 
-Kaj Jansson 
+Johannes Haapanen
+- E-mail:
+- Github account:
 
-Johannes Haapanen 
-
-Joel Borenius 
+Joel Borenius
+- E-mail:
+- Github account:
 
 Rasmus Haapalainen
+- E-mail:
+- Github account:
 
-Link to Frontend:
+## 2. Introduction
 
-https://github.com/Ryhma-RED-Ohjelmistoprojekti-2/s24RyhmaREDfrontend
+This the backend repository for weatherapp.
+
+![image](https://github.com/user-attachments/assets/b25e5814-f6c5-4a9b-ad6a-c8c655322238)
+
+Picture 01: The visual UI of weatherapp. [KAJ! -> TODO: ADD UPDATED IMAGE OF WEATHERAPP]
+
+## 3. Link to manual of backend
+
+The broad manual of the backend can be read via following link:
+https://github.com/Ryhma-RED-Ohjelmistoprojekti-2/Weatherapp-documents/blob/d51a03c526b987cb1740cf9b24a8509a2c512024/Manual-for-backend.md
+
