@@ -1,22 +1,35 @@
-Members of the team:
+## 1. Members of the team:
 
 Erkki Tiili
+- E-mail:
+- Github account:
 
-Email:
-Github account: 
+Ilari Koikkalainen
+- E-mail:
+- Github account:
 
-Ilari Koikkalainen 
+Oskari Aho
+- E-mail:
+- Github account:
 
-Oskari Aho 
+Kaj Jansson
+- E-mail: kaj.jansson@myy.haaga-helia.fi
+- Github account: https://github.com/KajFromHH
 
-Kaj Jansson 
+Johannes Haapanen
+- E-mail:
+- Github account:
 
-Johannes Haapanen 
-
-Joel Borenius 
+Joel Borenius
+- E-mail:
+- Github account:
 
 Rasmus Haapalainen
+- E-mail:
+- Github account:
 
-Link to Frontend:
+## 2. Link to manual of backend.
 
-https://github.com/Ryhma-RED-Ohjelmistoprojekti-2/s24RyhmaREDfrontend
+The broad manual of the backend can be read via following link:
+
+
