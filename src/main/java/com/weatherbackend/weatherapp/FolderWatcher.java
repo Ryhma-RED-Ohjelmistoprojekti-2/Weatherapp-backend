@@ -19,7 +19,7 @@ public class FolderWatcher {
         Path path = Paths.get(directoryPath);
         try {
             Path newestFile = getNewestFile(path);
-            if (newestFile != null) {
+            if (newestFile != null && newestFile.toString().endsWith(".json")) {
                 System.out.println("Newest file detected: " + newestFile);
                 return newestFile.toString();
             }
