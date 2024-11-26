@@ -25,6 +25,25 @@
 				<role>Tester</role>		
 			</roles>
     	</developer>
+		<developer>
+			<name>Ilari Koikkalainen</name>
+		</developer>
+		<developer>
+			<name>Joel Borenius</name>
+		</developer>
+		<developer>
+			<name>Johannes Haapanen</name>
+		</developer>
+		<developer>
+			<name>Kaj Jansson</name>
+		</developer>
+		<developer>
+			<name>Oskari Aho</name>
+		</developer>
+		<developer>
+			<name>Rasmus Haapalainen</name>
+		</developer>
+		
 	</developers>
 	<scm>
 		<connection/>
