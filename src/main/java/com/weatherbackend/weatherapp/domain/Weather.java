@@ -30,6 +30,7 @@ public class Weather {
     @Column(name = "rainfall_twenty_four_hour")
     private Float rainfallTwentyFourHour = 0.0f;
 
+    //TODO: Are date and time needed?
     private String date;
 
     private String time;

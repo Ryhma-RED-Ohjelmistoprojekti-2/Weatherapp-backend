@@ -12,7 +12,7 @@ import com.weatherbackend.weatherapp.web.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SmokeTest {
+public class SmokeTest {//TODO: Update test?
 
     @Autowired
     WeatherRestController weatherRestController;
@@ -23,10 +23,8 @@ public class SmokeTest {
     private String passwordForDatabase;
     @Value("${DB_URL}")
     private String urlForDatabase;
-    @Value("${AIRPORT_CODE}")
-    private String airportCode;
-    @Value("${ALLOWED_ORIGINS}")
-    private String allowedOrigins;
+    @Value("${TARGET_DIRECTORY}")
+    private String targetDirectory;
 
     @Test
     void contextLoads() {
@@ -53,7 +51,7 @@ public class SmokeTest {
     }
 
     @Test
-    public void airportCodeNotNull() {
-        assertThat(airportCode).isNotNull();
+    public void targetDirectoryNotNull() {
+        assertThat(targetDirectory).isNotNull();
     }
 }
