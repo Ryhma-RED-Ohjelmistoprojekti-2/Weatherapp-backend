@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weatherbackend.weatherapp.domain.Weather;
 import com.weatherbackend.weatherapp.domain.WeatherRepository;
 
