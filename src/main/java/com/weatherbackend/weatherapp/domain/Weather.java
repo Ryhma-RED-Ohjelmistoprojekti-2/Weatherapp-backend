@@ -28,9 +28,8 @@ public class Weather {
     private Float rainfallOneHour = 0.0f;
 
     @Column(name = "rainfall_twenty_four_hour")
-    private Float rainfallTwentyFourHour = 0.0f;
+    private Float rainfallTwentyFourHours = 0.0f;
 
-    //TODO: Are date and time needed?
     private String date;
 
     private String time;
@@ -43,7 +42,11 @@ public class Weather {
             Integer humidity,
             Float barometricPressure,
             Integer windDirection,
-            Float avgWindSpeed, Float maxWindSpeed, Float rainfallOneHour, Float rainfallTwentyFourHour, String date,
+            Float avgWindSpeed,
+            Float maxWindSpeed, 
+            Float rainfallOneHour, 
+            Float rainfallTwentyFourHours, 
+            String date,
             String time) {
         this.temperature = temperature;
         this.humidity = humidity;
@@ -52,7 +55,7 @@ public class Weather {
         this.avgWindSpeed = avgWindSpeed;
         this.maxWindSpeed = maxWindSpeed;
         this.rainfallOneHour = rainfallOneHour;
-        this.rainfallTwentyFourHour = rainfallTwentyFourHour;
+        this.rainfallTwentyFourHours = rainfallTwentyFourHours;
         this.date = date;
         this.time = time;
     }
@@ -121,12 +124,12 @@ public class Weather {
         this.rainfallOneHour = rainfallOneHour;
     }
 
-    public Float getRainfallTwentyFourHour() {
-        return rainfallTwentyFourHour;
+    public Float getRainfallTwentyFourHours() {
+        return rainfallTwentyFourHours;
     }
 
-    public void setRainfallTwentyFourHour(Float rainfallTwentyFourHour) {
-        this.rainfallTwentyFourHour = rainfallTwentyFourHour;
+    public void setRainfallTwentyFourHours(Float rainfallTwentyFourHours) {
+        this.rainfallTwentyFourHours = rainfallTwentyFourHours;
 
     }
 
@@ -151,7 +154,7 @@ public class Weather {
         return "Weather [temperature=" + temperature + ", humidity=" + humidity + ", barometricPressure="
             + barometricPressure + ", windDirection=" + windDirection + ", avgWindSpeed=" + avgWindSpeed
             + ", maxWindSpeed=" + maxWindSpeed + ", rainfallOneHour=" + rainfallOneHour
-            + ", rainfallTwentyFourHour=" + rainfallTwentyFourHour + ", date=" + date + ", time=" + time + "]"
+            + ", rainfallTwentyFourHours=" + rainfallTwentyFourHours + ", date=" + date + ", time=" + time + "]"
         ;
     }
 }

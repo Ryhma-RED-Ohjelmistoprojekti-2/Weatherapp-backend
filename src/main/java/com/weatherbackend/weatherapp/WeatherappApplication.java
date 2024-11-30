@@ -1,6 +1,7 @@
 package com.weatherbackend.weatherapp;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -12,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
 
-//import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weatherbackend.weatherapp.domain.Weather;
 import com.weatherbackend.weatherapp.domain.WeatherRepository;
 
@@ -45,12 +46,12 @@ class WeatherUpdateService {
             } catch (Exception e) {
                 System.err.println("Error during scheduled updateWeather: " + e.getMessage());
             }
-        }, 0, 1, TimeUnit.MINUTES);
+        }, 0, 30, TimeUnit.SECONDS);
     }
 
     private void updateWeather() {
         try {
-            String directory = System.getProperty("user.dir"); //Change this if app is executed from different directory!
+            String directory = "/home/jusju"; //System.getProperty("user.dir");
             String weatherTxtPath = WeatherTxtLocator.getWeatherTxtPath(directory);
 
             Weather newWeather = parseWeatherObject(weatherTxtPath);
@@ -75,21 +76,30 @@ class WeatherUpdateService {
         }
     }
 
-    //Here is method that could be used for normal json in the future!
-    // private Weather getWeatherObject(String path) {
-    //     Weather newWeather = new Weather();
-    //     ObjectMapper objectMapper = new ObjectMapper();
-    //     try {
-    //         newWeather = objectMapper.readValue(new File(path), Weather.class);
-    //     } catch (Exception e) {
-    //         System.err.println("ERROR: " + e.getMessage());
-    //     }
-    //     return newWeather;
-    // }
-
+    //This method could be used for normal JSON in the future.
+    private Weather getWeatherObject(String path) {
+        Weather newWeather = new Weather();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            newWeather = objectMapper.readValue(new File(path), Weather.class);
+        } catch (Exception e) {
+            System.err.println("ERROR: " + e.getMessage());
+        }
+        return newWeather;
+    }
+    
     private Weather parseWeatherObject(String path) {
         try (Scanner scanner = new Scanner(new File(path))) {
             Weather newWeather = new Weather();
+
+            LocalDateTime timestamp = WeatherTxtLocator.extractTimestampFromFilename(new File(path).toPath());
+            if (timestamp != null) {
+                newWeather.setDate(timestamp.toLocalDate().toString());
+                newWeather.setTime(timestamp.toLocalTime().toString());
+            } else {
+                System.err.println("Could not extract date and time from filename.");
+            }
+
             String regex = "(\\w+):\\s*([0-9.]+)";
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -122,7 +132,7 @@ class WeatherUpdateService {
                             newWeather.setAvgWindSpeed(Float.parseFloat(value));
                             break;
                         case "rainfall24hourmm":
-                            newWeather.setRainfallTwentyFourHour(Float.parseFloat(value));
+                            newWeather.setRainfallTwentyFourHours(Float.parseFloat(value));
                             break;
                         default:
                             break;
@@ -138,10 +148,15 @@ class WeatherUpdateService {
     }
 
     private boolean isWeatherComplete(Weather w) {
-        return w.getRainfallOneHour() != null && w.getMaxWindSpeed() != null &&
-                w.getTemperature() != null && w.getHumidity() != null &&
-                w.getRainfallTwentyFourHour() != null
-                && w.getBarometricPressure() != null && w.getWindDirection() != null &&
-                w.getAvgWindSpeed() != null;
+        return w.getRainfallOneHour() != null &&
+                w.getMaxWindSpeed() != null &&
+                w.getTemperature() != null &&
+                w.getHumidity() != null &&
+                w.getRainfallTwentyFourHours() != null &&
+                w.getBarometricPressure() != null &&
+                w.getWindDirection() != null &&
+                w.getAvgWindSpeed() != null &&
+                w.getDate() != null &&
+                w.getTime() != null;
     }
 }

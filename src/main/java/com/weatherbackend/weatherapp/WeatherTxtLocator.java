@@ -13,7 +13,7 @@ public class WeatherTxtLocator {
 
     private static final DateTimeFormatter FILE_NAME_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 
-    private static LocalDateTime extractTimestampFromFilename(Path path) {
+    public static LocalDateTime extractTimestampFromFilename(Path path) {
         Pattern pattern = Pattern.compile("^weather_(\\d{8})_(\\d{6})\\.txt$");
         Matcher matcher = pattern.matcher(path.getFileName().toString());
 
@@ -29,10 +29,10 @@ public class WeatherTxtLocator {
     public static Path getNewest(Path directory) throws IOException {
         Optional<Path> newestFile = Files.list(directory)
             .filter(Files::isRegularFile)
-            .filter(path -> extractTimestampFromFilename(path) != null)  // Filter files that match the timestamp pattern
-            .max(Comparator.comparing(path -> extractTimestampFromFilename(path)));  // Compare files by timestamp
+            .filter(path -> extractTimestampFromFilename(path) != null)  
+            .max(Comparator.comparing(path -> extractTimestampFromFilename(path)));  
 
-        return newestFile.orElse(null);  // Return the newest file or null if no valid files were found
+        return newestFile.orElse(null); 
     }
 
     public static String getWeatherTxtPath(String directory) {
