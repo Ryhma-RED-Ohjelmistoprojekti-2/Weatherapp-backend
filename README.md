@@ -32,9 +32,9 @@ Rasmus Haapalainen
 
 This the backend repository for weatherapp.
 
-![image](https://github.com/user-attachments/assets/b25e5814-f6c5-4a9b-ad6a-c8c655322238)
+![Functional_weatherapp_site](https://github.com/user-attachments/assets/146a60a0-d441-4f3d-b407-46e280291c85)
 
-Picture 01: The visual UI of weatherapp. [KAJ! -> TODO: ADD UPDATED IMAGE OF WEATHERAPP]
+Picture 01: The visual UI of weatherapp. The screenshot was taken on Saturday, 30 November 2024, via Mozilla Firefox browser.
 
 ## 3. Link to manual of backend
 
