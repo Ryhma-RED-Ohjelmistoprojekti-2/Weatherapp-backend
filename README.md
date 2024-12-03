@@ -5,8 +5,8 @@ Erkki Tiili
 - Github account: https://github.com/Textiili
 
 Ilari Koikkalainen
-- E-mail:
-- Github account:
+- E-mail: ilari.koikkalainen@myy.haaga-helia.fi
+- Github account: https://github.com/ilarikoik
 
 Kaj Jansson
 - E-mail: kaj.jansson@myy.haaga-helia.fi
